@@ -19,3 +19,50 @@ class Board:
     def get_availables(self):
         flatten_board = self.board.flatten()
         return np.where(flatten_board == 0)[0].tolist()
+    
+    def check_win(self,do_move):
+        y = do_move % self.width
+        x = do_move // self.width
+        color = self.board[x,y]
+        
+        for dx,dy in [(0,1),(1,1),(1,0),(1,-1)]:
+            count = 1
+            nx = x+dx
+            ny = y+dy
+            while(True):
+                if 0 <= nx <= self.height-1 and 0 <= ny <= self.width-1:
+                    if self.board[nx,ny] == color:
+                        count += 1
+                        nx += dx
+                        ny += dy
+                    else:
+                        break
+                else:
+                    break
+            
+            nx = x-dx
+            ny = y-dy
+            while(True):
+                if 0 <= nx <= self.height-1 and 0 <= ny <= self.width-1:
+                    if self.board[nx,ny] == color:
+                        count += 1
+                        nx -= dx
+                        ny -= dy
+                    else:
+                        break
+                else:
+                    break
+                
+            if count>=5:
+                 return True,color
+                
+        if len(self.get_availables()) == 0:
+            return True,0
+        
+        return False,-1
+    
+    def render(self):
+        char_map = {1:'o',-1:'●',0:'.'}
+        
+
+test = Board(15,15)
