@@ -62,7 +62,16 @@ class Board:
         return False,-1
     
     def render(self):
+        print(' ',end = ' ')
         char_map = {1:'o',-1:'●',0:'.'}
-        
+        for col in range(self.width):
+            print(col,end = ' ')
+        print()
+        for row in range(self.height):
+            print(row,end = ' ')
+            for col in range(self.width):
+                print(char_map[self.board[row,col]],end = ' ')
+            print()
+
 
 test = Board(15,15)
