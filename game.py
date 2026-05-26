@@ -72,6 +72,12 @@ class Board:
             for col in range(self.width):
                 print(f'{char_map[self.board[row,col]]:>2}',end = ' ')
             print()
+            
+    def copy(self):
+        copy_board = Board(self.height , self.width)
+        copy_board = self.board.copy()
+        copy_board.current_player = self.current_player
+        return copy_board
 
 test_board = Board(9,9)
 
@@ -84,13 +90,18 @@ while(True):
     col = int(col_str)
     move_int = row * test_board.width + col
     test_board.move(move_int)
-    test_checkwin = test_board.check_win(move_int)
-    if test_checkwin == (True,test_player):
-        print(f'{test_player}胜利！')
-        break
-    elif test_checkwin == (True,0):
-        print(f'平局！')
-        break
-    else:
-        continue
+    is_end , winner = test_board.check_win(move_int)
+    if is_end == True:
+        test_board.render()
+        if winner == 1:
+            print(f'{test_player}胜利！')
+            break
+        if winner == -1:
+            print(f'{test_player}胜利！')
+            break
+        elif winner == (True,0):
+            print(f'平局！')
+            break
+        else:
+            continue
               
