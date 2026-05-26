@@ -62,16 +62,35 @@ class Board:
         return False,-1
     
     def render(self):
-        print(' ',end = ' ')
+        print('  ',end = ' ')
         char_map = {1:'o',-1:'●',0:'.'}
         for col in range(self.width):
-            print(col,end = ' ')
+            print(f'{col:2d}',end = ' ')
         print()
         for row in range(self.height):
-            print(row,end = ' ')
+            print(f'{row:2d}',end = ' ')
             for col in range(self.width):
-                print(char_map[self.board[row,col]],end = ' ')
+                print(f'{char_map[self.board[row,col]]:>2}',end = ' ')
             print()
 
+test_board = Board(9,9)
 
-test = Board(15,15)
+while(True):
+    test_board.render()
+    test_player = " 黑方 " if test_board.current_player == 1 else " 白方 "
+    test_move = input(f'当前玩家为{test_player}:')
+    row_str , col_str = test_move.split(',')
+    row = int(row_str)
+    col = int(col_str)
+    move_int = row * test_board.width + col
+    test_board.move(move_int)
+    test_checkwin = test_board.check_win(move_int)
+    if test_checkwin == (True,test_player):
+        print(f'{test_player}胜利！')
+        break
+    elif test_checkwin == (True,0):
+        print(f'平局！')
+        break
+    else:
+        continue
+              
