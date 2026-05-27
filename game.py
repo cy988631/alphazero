@@ -79,29 +79,31 @@ class Board:
         copy_board.current_player = self.current_player
         return copy_board
 
-test_board = Board(9,9)
+if __name__ == '__main__':
 
-while(True):
-    test_board.render()
-    test_player = " 黑方 " if test_board.current_player == 1 else " 白方 "
-    test_move = input(f'当前玩家为{test_player}:')
-    row_str , col_str = test_move.split(',')
-    row = int(row_str)
-    col = int(col_str)
-    move_int = row * test_board.width + col
-    test_board.move(move_int)
-    is_end , winner = test_board.check_win(move_int)
-    if is_end == True:
+    test_board = Board(9,9)
+
+    while(True):
         test_board.render()
-        if winner == 1:
-            print(f'{test_player}胜利！')
-            break
-        if winner == -1:
-            print(f'{test_player}胜利！')
-            break
-        elif winner == (True,0):
-            print(f'平局！')
-            break
-        else:
-            continue
+        test_player = " 黑方 " if test_board.current_player == 1 else " 白方 "
+        test_move = input(f'当前玩家为{test_player}:')
+        row_str , col_str = test_move.split(',')
+        row = int(row_str)
+        col = int(col_str)
+        move_int = row * test_board.width + col
+        test_board.move(move_int)
+        is_end , winner = test_board.check_win(move_int)
+        if is_end == True:
+            test_board.render()
+            if winner == 1:
+                print(f'{test_player}胜利！')
+                break
+            if winner == -1:
+                print(f'{test_player}胜利！')
+                break
+            elif winner == 0:
+                print(f'平局！')
+                break
+            else:
+                continue
               
