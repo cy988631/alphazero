@@ -26,13 +26,16 @@ class MCTSnode():
             return False
         else:
             return max(self.children,key = self.get_UCB())
+
 class MCTS():
     #主流程
     def __init___(self,board):
+        #初始化棋盘和当前节点
         self.board = board
-        self.node = MCTSnode()
+        self.node = MCTSnode(None,None)
+    
     def selection(self):
+        #选择
         copy_board = self.board.copy()
-
-
-
+        while(len(copy_board.get_availables()) == len(self.node.children)):
+            self.node == self.node.get_max()
