@@ -36,6 +36,8 @@ class MCTS():
     
     def selection(self):
         #选择
-        copy_board = self.board.copy()
-        while(len(copy_board.get_availables()) == len(self.node.children)):
+        while(len(self.board.get_availables()) == len(self.node.children)):
             self.node == self.node.get_max()
+            
+    def expansion(self):
+        #扩展
