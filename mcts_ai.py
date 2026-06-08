@@ -41,3 +41,4 @@ class MCTS():
             
     def expansion(self):
         #扩展
+        self.node.children.update
