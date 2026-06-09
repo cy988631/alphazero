@@ -1,23 +1,24 @@
 from game import Board
 import math
+import random
 
 class MCTSnode():
     #创建节点
-    def __init__(self,parent,action):
+    def __init__(self,parent,action,board):
         self.parent = parent
         self.children = {}
         self.wins = 0
         self.visits = 0
         self.action = action
+        self.board = board.copy()
     
-    def get_UCB(self,c_param=math.sqrt(2)):
+    def get_UCB(self):
         #UCB判分
         if self.visits == 0:
             return float('inf')
         else:
             exploitation = self.wins/self.visits
-            self.c_param = c_param
-            exploration = self.c_param*math.sqrt(math.log(self.parent.visits)/self.visits)
+            exploration = math.sqrt(2)*math.sqrt(math.log(self.parent.visits)/self.visits)
             return exploitation + exploration
             
     def get_max(self):
@@ -25,20 +26,26 @@ class MCTSnode():
         if self.children == {}:
             return False
         else:
-            return max(self.children,key = self.get_UCB())
-
+            return max(self.children.values(),key = MCTSnode.get_UCB())
+        
 class MCTS():
     #主流程
-    def __init___(self,board):
+    def __init__(self,board):
         #初始化棋盘和当前节点
         self.board = board
-        self.node = MCTSnode(None,None)
+        self.node = MCTSnode(None,None,self.board)
     
     def selection(self):
         #选择
-        while(len(self.board.get_availables()) == len(self.node.children)):
-            self.node == self.node.get_max()
+        while(len(self.node.board.get_availables()) == len(self.node.children)):
+            self.node = self.node.get_max()
+            if len(self.node.children == 0):
+                break
             
     def expansion(self):
         #扩展
-        self.node.children.update
+        move = random.choice(self.node.board.get_availables())
+        self.node.children.update(self.node,move,self.node.board.move)
+        self.node = self.node.get_max()
+
+    
