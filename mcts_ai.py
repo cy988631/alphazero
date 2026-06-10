@@ -45,7 +45,10 @@ class MCTS():
     def expansion(self):
         #扩展
         move = random.choice(self.node.board.get_availables())
-        self.node.children.update(self.node,move,self.node.board.move)
+        new_board = self.node.board.copy()
+        new_board.move()
+        new_node = MCTSnode(self.node,move,new_board)
+        self.node.children.update(move:new_node)
         self.node = self.node.get_max()
 
     
