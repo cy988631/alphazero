@@ -1,6 +1,7 @@
 from game import Board
 import math
 import random
+import numpy as np
 
 class MCTSnode():
     #创建节点
@@ -10,7 +11,10 @@ class MCTSnode():
         self.wins = 0
         self.visits = 0
         self.action = action
-        self.board = board.copy()
+        self.board = board
+        
+        self.is_terminal = False
+        
     
     def get_UCB(self):
         #UCB判分
@@ -38,17 +42,27 @@ class MCTS():
     def selection(self):
         #选择
         while(len(self.node.board.get_availables()) == len(self.node.children)):
-            self.node = self.node.get_max()
-            if len(self.node.children == 0):
+            
+            if len(self.node.children) == 0:
                 break
+            #判断是否结束
+            if self.node.board.check_win == 
+            self.node = self.node.get_max()
             
     def expansion(self):
         #扩展
-        move = random.choice(self.node.board.get_availables())
+        
+        #获取空位并过滤未探索动作
+        availables = np.array(self.node.board.get_availables())
+        explored_moves = list(self.node.children.keys())
+        unexplored_moves = availables[~np.isin(availables,explored_moves)] 
+        do_move = np.random.choice(unexplored_moves)
+        
+        #扩展并更新节点
         new_board = self.node.board.copy()
-        new_board.move()
-        new_node = MCTSnode(self.node,move,new_board)
-        self.node.children.update(move:new_node)
-        self.node = self.node.get_max()
+        new_board.move(do_move)
+        new_node = MCTSnode(self.node,do_move,new_board)
+        self.node.children[do_move] == new_node
+        self.node = new_node
 
     
