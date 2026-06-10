@@ -12,8 +12,9 @@ class MCTSnode():
         self.visits = 0
         self.action = action
         self.board = board
-        
+        #终局判定
         self.is_terminal = False
+        if self.
         
     
     def get_UCB(self):
@@ -46,7 +47,7 @@ class MCTS():
             if len(self.node.children) == 0:
                 break
             #判断是否结束
-            if self.node.board.check_win == 
+            
             self.node = self.node.get_max()
             
     def expansion(self):
