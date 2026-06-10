@@ -38,7 +38,7 @@ class RuleAI():
     
 class Human:
     def get_action(self,board):
-        while(True):
+        while True:
             try:
                 # 人类落子逻辑
                 do_move = input(f'请输入坐标：')

@@ -10,7 +10,7 @@ class Board:
     def move(self,do_move):
         y = do_move % self.width
         x = do_move // self.width
-        if self.board[x,y] ==0:
+        if self.board[x,y] == 0:
             self.board[x,y] = self.current_player
         else:
             return False
