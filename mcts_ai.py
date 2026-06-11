@@ -76,7 +76,7 @@ class MCTS():
         sim_board = self.node.board.copy()
         while True:
             #平局判断
-            if len(sim_board.get_availables()) == 0
+            if len(sim_board.get_availables()) == 0：
                 return -1
             #落子
             do_move =random.choice(sim_board.get_availables())
