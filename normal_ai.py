@@ -64,25 +64,26 @@ class Human:
             except ValueError:
                 print("❌ 输入格式错误！请重新输入！")
 
-players = {1:RuleAI(),-1:Human()}
+#
+# players = {1:RuleAI(),-1:Human()}
 
-while(True):
-    state.render()
-    ai_player = players[state.current_player]
-    print(f'当前玩家:{ai_player}思考中')
-    move = ai_player.get_action(state)
-    state.move(move)
-    is_end , winner = state.check_win(move)
-    if is_end == True:
-        state.render()
-        if winner == 1:
-            print('RuleAI胜利！')
-            break
-        if winner == -1:
-            print('Human胜利！')
-            break
-        elif winner == 0:
-            print(f'平局！')
-            break
-        else:
-            continue
+# while(True):
+#     state.render()
+#     ai_player = players[state.current_player]
+#     print(f'当前玩家:{ai_player}思考中')
+#     move = ai_player.get_action(state)
+#     state.move(move)
+#     is_end , winner = state.check_win(move)
+#     if is_end == True:
+#         state.render()
+#         if winner == 1:
+#             print('RuleAI胜利！')
+#             break
+#         if winner == -1:
+#             print('Human胜利！')
+#             break
+#         elif winner == 0:
+#             print(f'平局！')
+#             break
+#         else:
+#             continue
