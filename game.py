@@ -75,12 +75,12 @@ class Board:
             
     def copy(self):
         copy_board = Board(self.height , self.width)
-        copy_board = self.board.copy()
+        copy_board.board = self.board.copy()
         copy_board.current_player = self.current_player
         return copy_board
 
 
-# 人类博弈
+# 测试
 # if __name__ == '__main__':
 
 #     test_board = Board(9,9)

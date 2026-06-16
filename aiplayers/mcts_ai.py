@@ -1,4 +1,3 @@
-from game import Board
 import math
 import numpy as np
 import random
@@ -33,7 +32,7 @@ class MCTSnode():
         if self.children == {}:
             return False
         else:
-            return max(self.children.values(),key = MCTSnode.get_UCB())
+            return max(self.children.values(),key = MCTSnode.get_UCB)
         
 class MCTS():
     #主流程
@@ -41,6 +40,7 @@ class MCTS():
         #初始化棋盘和当前节点
         self.board = board
         self.node = MCTSnode(None,None,self.board)
+        self.root = self.node
     
     def selection(self):
         #选择
@@ -53,7 +53,6 @@ class MCTS():
             
     def expansion(self):
         #扩展
-        
         #终局判定
         if self.node.is_terminal:
             return
@@ -77,15 +76,55 @@ class MCTS():
         while True:
             #平局判断
             if len(sim_board.get_availables()) == 0:
-                return -1
-            #落子
-            do_move =random.choice(sim_board.get_availables())
+                return 0
+
+            #随机落子
+            do_move =random.choice(sim_board.get_availables())        
+            
             sim_board.move(do_move)
             #赢家检测
             win_flag , win_player = sim_board.check_win(do_move)
             if win_flag:
                 return win_player
             
-    def backpropagation(self):
+    def backpropagation(self,result):
         #回传
+        #玩家判断
+        while self.node is not None:
+            self.node.visits += 1
+            if result != self.node.board.current_player:
+                score = 1
+            elif result == self.node.board.current_player:
+                score = 0
+            else:
+                score = 0.5
+            self.node.wins += score
+            self.node = self.node.parent
+            
+    def run(self,iteractions):
+        #迭代
+        for epoch in range(iteractions):
+            self.selection()
+            self.expansion()
+            result = self.simulation()
+            self.backpropagation(result)
+            self.node = self.root
+        #最终动作选取
+        best_node = max(self.node.children.values(),key = lambda x: x.visits)
+        return best_node.action
+    
+# ==========================================
+# 分界线：真正的mctsai
+# ==========================================
+
+class MCTSAI():
+    #玩家级AI
+    def __init__(self,interactions = 1000):
+        #迭代次数
+        self.interactions = interactions
         
+    def get_action(self,board):
+        #获取动作
+        mcts_engine = MCTS(board)
+        return mcts_engine.run(self.interactions)
+    

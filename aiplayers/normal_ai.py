@@ -64,7 +64,7 @@ class Human:
             except ValueError:
                 print("❌ 输入格式错误！请重新输入！")
 
-#人类vs普通随机ai
+#人类vs普通随机ai测试
 # players = {1:RuleAI(),-1:Human()}
 
 # while(True):
